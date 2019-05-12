@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 05/09/19 17:38:13 by Eclipse SUMO Version 1.0.1
+<!-- generated on 05/11/19 19:58:45 by Eclipse SUMO Version 1.0.1
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="AL69_allGreen.net.xml"/>
-        <route-files value="AL69.rou.xml"/>
-        <additional-files value="AL69_another.det.xml"/>
+        <net-file value="AL69_14intersections.net.xml"/>
+        <route-files value="AL69_14intersections.rou.xml"/>
+        <additional-files value="AL69_14intersections.det.xml"/>
     </input>
 
     <time>
@@ -19,17 +19,19 @@
     </report>
 
     <traci_server>
-        <remote-port value="1659"/>
+        <remote-port value="1355"/>
     </traci_server>
 
 </configuration>
 -->
 
 <detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
-    <interval begin="0.00" end="900.00" id="out_e1Detector_E54_1_10" nVehContrib="3" flow="12.00" occupancy="0.08" speed="20.63" length="5.00" nVehEntered="3"/>
-    <interval begin="900.00" end="1800.00" id="out_e1Detector_E54_1_10" nVehContrib="2" flow="8.00" occupancy="0.05" speed="22.05" length="5.00" nVehEntered="3"/>
-    <interval begin="1800.00" end="2700.00" id="out_e1Detector_E54_1_10" nVehContrib="4" flow="16.00" occupancy="0.10" speed="22.19" length="5.00" nVehEntered="4"/>
-    <interval begin="2700.00" end="3600.00" id="out_e1Detector_E54_1_10" nVehContrib="3" flow="12.00" occupancy="0.08" speed="22.17" length="5.00" nVehEntered="3"/>
-    <interval begin="3600.00" end="4500.00" id="out_e1Detector_E54_1_10" nVehContrib="1" flow="4.00" occupancy="0.03" speed="22.03" length="5.00" nVehEntered="1"/>
-    <interval begin="4500.00" end="5204.00" id="out_e1Detector_E54_1_10" nVehContrib="3" flow="15.34" occupancy="0.10" speed="22.22" length="5.00" nVehEntered="3"/>
+    <interval begin="0.00" end="900.00" id="out_e1Detector_E54_1_10" nVehContrib="47" flow="188.00" occupancy="1.58" speed="17.15" length="5.00" nVehEntered="48"/>
+    <interval begin="900.00" end="1800.00" id="out_e1Detector_E54_1_10" nVehContrib="83" flow="332.00" occupancy="2.64" speed="18.27" length="5.00" nVehEntered="83"/>
+    <interval begin="1800.00" end="2700.00" id="out_e1Detector_E54_1_10" nVehContrib="77" flow="308.00" occupancy="2.65" speed="17.33" length="5.00" nVehEntered="77"/>
+    <interval begin="2700.00" end="3600.00" id="out_e1Detector_E54_1_10" nVehContrib="88" flow="352.00" occupancy="2.71" speed="19.00" length="5.00" nVehEntered="88"/>
+    <interval begin="3600.00" end="4500.00" id="out_e1Detector_E54_1_10" nVehContrib="83" flow="332.00" occupancy="2.70" speed="17.99" length="5.00" nVehEntered="83"/>
+    <interval begin="4500.00" end="5400.00" id="out_e1Detector_E54_1_10" nVehContrib="85" flow="340.00" occupancy="2.72" speed="18.13" length="5.00" nVehEntered="86"/>
+    <interval begin="5400.00" end="6300.00" id="out_e1Detector_E54_1_10" nVehContrib="85" flow="340.00" occupancy="2.88" speed="17.34" length="5.00" nVehEntered="85"/>
+    <interval begin="6300.00" end="7174.00" id="out_e1Detector_E54_1_10" nVehContrib="50" flow="205.95" occupancy="1.88" speed="16.42" length="5.00" nVehEntered="50"/>
 </detector>

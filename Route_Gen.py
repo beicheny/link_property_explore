@@ -27,18 +27,18 @@ def generate_routefile():
     N = 3600  # number of time steps
     pi = 3.14159
 
-    with open("AL69.rou.xml", "w") as routes:
+    with open("AL69_14intersections.rou.xml", "w") as routes:
         print("""<routes>
         <vType id="car" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="22.352" \
 guiShape="passenger"/>
 
-        <route id="down" edges="E12 E23 E34 E45 E56 E67 E78 E89 E90" />
-        <route id="up" edges="E09 E98 E87 E76 E65 E54 E43 E32 E21" />
+        <route id="down" edges="Eab Ebc Ec1 E12 E23 E34 E45 E56 E67 E78 E89 E90 E0d Ede Eef" />
+        <route id="up" edges="Efe Eed Ed0 E09 E98 E87 E76 E65 E54 E43 E32 E21 E1c Ecb Eba" />
         """, file=routes)
         vehNr = 0
         for i in range(N):
             # demand per second from different directions
-            pDown = 0.27
+            pDown = 0.34694
             pUp = pDown    
             if random.uniform(0, 1) < pDown:
                 print('    <vehicle id="down_%i" type="car" route="down" depart="%i" color="0,1,0"/>' % (
