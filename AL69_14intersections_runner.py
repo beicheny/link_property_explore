@@ -23,6 +23,7 @@ import sys
 import optparse
 import math
 
+# 64 detectors
 Detectors = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E32_1_2","e1Detector_E32_0_3",
              "e1Detector_E23_0_4","e1Detector_E23_1_5","e1Detector_E43_1_6","e1Detector_E43_0_7",
 			 "e1Detector_E34_0_8","e1Detector_E34_1_9","e1Detector_E54_1_10","e1Detector_E54_0_11",
@@ -40,6 +41,26 @@ Detectors = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E32_1_2","e1D
 			 "out_e1Detector_E78_0_24","out_e1Detector_E78_1_25","out_e1Detector_E98_1_26","out_e1Detector_E98_0_27",
 			 "out_e1Detector_E89_0_28","out_e1Detector_E89_1_29","out_e1Detector_E90_1_30","out_e1Detector_E90_0_31"]
 
+
+#detectorDownNameList = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E23_0_4","e1Detector_E23_1_5",
+#                        "e1Detector_E34_0_8","e1Detector_E34_1_9","e1Detector_E45_0_12","e1Detector_E45_1_13",
+#                        "e1Detector_E56_0_16","e1Detector_E56_1_17","e1Detector_E67_0_20","e1Detector_E67_1_21",
+#                        "e1Detector_E78_0_24","e1Detector_E78_1_25","e1Detector_E89_0_28","e1Detector_E89_1_29"]
+#detectorUpNameList = ["e1Detector_E09_1_30","e1Detector_E09_0_31","e1Detector_E98_1_26","e1Detector_E98_0_27",#
+#                      "e1Detector_E87_1_22","e1Detector_E87_0_23","e1Detector_E76_1_18","e1Detector_E76_0_19",
+#                      "e1Detector_E65_1_14","e1Detector_E65_0_15","e1Detector_E54_1_10","e1Detector_E54_0_11",
+#                      "e1Detector_E43_1_6","e1Detector_E43_0_7","e1Detector_E32_1_2","e1Detector_E32_0_3"]
+#detectorOutDownNameList = ["out_e1Detector_E23_0_4","out_e1Detector_E23_1_5","out_e1Detector_E34_0_8","out_e1Detector_E34_1_9",
+#                           "out_e1Detector_E45_0_12","out_e1Detector_E45_1_13","out_e1Detector_E56_0_16","out_e1Detector_E56_1_17",
+#                           "out_e1Detector_E67_0_20","out_e1Detector_E67_1_21","out_e1Detector_E78_0_24","out_e1Detector_E78_1_25",
+#                           "out_e1Detector_E89_0_28","out_e1Detector_E89_1_29","out_e1Detector_E90_1_30","out_e1Detector_E90_0_31"]
+#detectorOutUpNameList = ["out_e1Detector_E98_1_26","out_e1Detector_E98_0_27","out_e1Detector_E87_1_22","out_e1Detector_E87_0_23",
+#                         "out_e1Detector_E76_1_18","out_e1Detector_E76_0_19","out_e1Detector_E65_1_14","out_e1Detector_E65_0_15",
+#                         "out_e1Detector_E54_1_10","out_e1Detector_E54_0_11","out_e1Detector_E43_1_6","out_e1Detector_E43_0_7",
+#                         "out_e1Detector_E32_1_2","out_e1Detector_E32_0_3","out_e1Detector_E21_0_0","out_e1Detector_E21_1_1"]
+
+
+
 # Intersection Positions
 IntersectionNames = ['I2','I3','I4','I5','I6','I7','I8','I9'];
 IntersectionPos = [[3185.72,13874.64],
@@ -55,6 +76,8 @@ transmissionRange = 100
 # ID for Edges Enter Intersection
 edgeList = ['E12','E32','E23','E43','E34','E54','E45','E65','E56','E76','E67','E87','E78','E98','E89','E09']
 edgeListOut = ['E21','E23','E32','E34','E43','E45','E54','E56','E65','E67','E76','E78','E87','E89','E98','E90']
+
+TrafficLightIntersectionList = ['Intersection_2','Intersection_3','Intersection_4','Intersection_5','Intersection_6','Intersection_7','Intersection_8','Intersection_9']
 
 # we need to import python modules from the $SUMO_HOME/tools directory
 if 'SUMO_HOME' in os.environ:
@@ -83,11 +106,10 @@ def run():
     # traci.trafficlight.setPhase("0", 2)
     traceIDFile = open("IntervalIDBase14Intersections.txt", "w")
 	
-    firstLine = 'timestamp'
-    trafficLightIDList = traci.trafficlight.getIDList()    
+    firstLine = 'timestamp'    
     for detector in Detectors:
         firstLine = firstLine + ';' + detector     
-    for trafficLightID in trafficLightIDList:
+    for trafficLightID in TrafficLightIntersectionList:
         firstLine = firstLine + ';' + trafficLightID 
     for edge in edgeList:
         firstLine = firstLine + ';' + edge
@@ -133,7 +155,7 @@ def run():
         for detector in Detectors:
             vehID = traci.inductionloop.getLastStepVehicleIDs(detector)
             currentLineID = currentLineID + ';' + str(vehID)
-        for trafficLightID in trafficLightIDList:
+        for trafficLightID in TrafficLightIntersectionList:
             phase = traci.trafficlight.getPhase(trafficLightID)
             currentLineID = currentLineID + ';' + str(phase)
         for EdgeIntersectionsVehNum in EdgeIntersectionsVehNums:
