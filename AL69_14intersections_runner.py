@@ -46,7 +46,7 @@ Detectors = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E32_1_2","e1D
 #                        "e1Detector_E34_0_8","e1Detector_E34_1_9","e1Detector_E45_0_12","e1Detector_E45_1_13",
 #                        "e1Detector_E56_0_16","e1Detector_E56_1_17","e1Detector_E67_0_20","e1Detector_E67_1_21",
 #                        "e1Detector_E78_0_24","e1Detector_E78_1_25","e1Detector_E89_0_28","e1Detector_E89_1_29"]
-#detectorUpNameList = ["e1Detector_E09_1_30","e1Detector_E09_0_31","e1Detector_E98_1_26","e1Detector_E98_0_27",#
+#detectorUpNameList = ["e1Detector_E09_1_30","e1Detector_E09_0_31","e1Detector_E98_1_26","e1Detector_E98_0_27",
 #                      "e1Detector_E87_1_22","e1Detector_E87_0_23","e1Detector_E76_1_18","e1Detector_E76_0_19",
 #                      "e1Detector_E65_1_14","e1Detector_E65_0_15","e1Detector_E54_1_10","e1Detector_E54_0_11",
 #                      "e1Detector_E43_1_6","e1Detector_E43_0_7","e1Detector_E32_1_2","e1Detector_E32_0_3"]
@@ -77,6 +77,16 @@ transmissionRange = 100
 edgeList = ['E12','E32','E23','E43','E34','E54','E45','E65','E56','E76','E67','E87','E78','E98','E89','E09']
 edgeListOut = ['E21','E23','E32','E34','E43','E45','E54','E56','E65','E67','E76','E78','E87','E89','E98','E90']
 
+InDetectorPosition = [482.64,346.31,353.16,382.31,
+					  384.10,493.69,491.44,1332.16,
+					  1317.15,480.98,481.47,262.95,
+					  265.85,464.31,467.20,460.07]
+
+OutDetectorPosition = [100,100,100,100,
+                       100,100,100,100,
+					   100,100,100,100,
+					   100,100,100,100]
+
 TrafficLightIntersectionList = ['Intersection_2','Intersection_3','Intersection_4','Intersection_5','Intersection_6','Intersection_7','Intersection_8','Intersection_9']
 
 # we need to import python modules from the $SUMO_HOME/tools directory
@@ -104,8 +114,9 @@ def run():
     step = 0
     # we start with phase 2 where EW has green
     # traci.trafficlight.setPhase("0", 2)
-    traceIDFile = open("IntervalIDBase14Intersections.txt", "w")
+    #traceIDFile = open("IntervalIDBase14Intersections.txt", "w")
 	
+    fileOutput = ""
     firstLine = 'timestamp'    
     for detector in Detectors:
         firstLine = firstLine + ';' + detector     
@@ -117,7 +128,8 @@ def run():
         firstLine = firstLine + ';' + 'out_' + edge
     for IntersectionName in IntersectionNames:
         firstLine = firstLine + ';' + IntersectionName
-    traceIDFile.write(firstLine+'\n')
+    #traceIDFile.write(firstLine+'\n')
+    fileOutput = fileOutput + firstLine + '\n'
 
 	
     while traci.simulation.getMinExpectedNumber() > 0:
@@ -135,20 +147,20 @@ def run():
                     IntersectionsVehNums[i] = IntersectionsVehNums[i] + 1
                     break
 					
+        # vehicle located in the 100 of intersection drive out direction 
         for (index, edgeID) in enumerate(edgeList):
             vehicleIDList=traci.edge.getLastStepVehicleIDs(edgeID)
-            intersectionNum = int(edgeID[2]) - 2
             for vehicleID in vehicleIDList:
-                (x,y) = traci.vehicle.getPosition(vehicleID)
-                if math.pow(x - IntersectionPos[intersectionNum][0], 2) + math.pow(y - IntersectionPos[intersectionNum][1], 2) <= math.pow(transmissionRange,2):
+                distanceToEdgeSrart = traci.vehicle.getLanePosition(vehicleID)
+                if distanceToEdgeSrart >= InDetectorPosition[index]:
                     EdgeIntersectionsVehNums[index] = EdgeIntersectionsVehNums[index] + 1
 
+        # vehicle located in the 100 of intersection drive out direction
         for (index, edgeID) in enumerate(edgeListOut):
             vehicleIDList=traci.edge.getLastStepVehicleIDs(edgeID)
-            intersectionNum = int(edgeID[1]) - 2  # eg. for edge E21, its edgeID[1] is 2 means the intersection is 2
             for vehicleID in vehicleIDList:
-                (x,y) = traci.vehicle.getPosition(vehicleID)
-                if math.pow(x - IntersectionPos[intersectionNum][0], 2) + math.pow(y - IntersectionPos[intersectionNum][1], 2) <= math.pow(transmissionRange,2):
+                distanceToEdgeSrart = traci.vehicle.getLanePosition(vehicleID)
+                if distanceToEdgeSrart <= OutDetectorPosition[index]:
                     EdgeOutIntersectionsVehNums[index] = EdgeOutIntersectionsVehNums[index] + 1
         
         print("Current Step: " + str(step))
@@ -164,11 +176,15 @@ def run():
             currentLineID = currentLineID + ';' + str(EdgeOutIntersectionsVehNum)
         for IntersectionsVehNum in IntersectionsVehNums:
             currentLineID = currentLineID + ';' + str(IntersectionsVehNum)	
-        traceIDFile.write(currentLineID + '\n')
+        #traceIDFile.write(currentLineID + '\n')
+		
+        fileOutput = fileOutput + currentLineID + '\n'		
         step += 1
-    
+
+    traci.close()    
+    traceIDFile = open("IntervalIDBase14Intersections.txt", "w")
+    traceIDFile.write(fileOutput)
     traceIDFile.close()
-    traci.close()
     sys.stdout.flush()
 
 
