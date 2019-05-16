@@ -32,14 +32,14 @@ Detectors = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E32_1_2","e1D
 			 "e1Detector_E67_0_20","e1Detector_E67_1_21","e1Detector_E87_1_22","e1Detector_E87_0_23",
 			 "e1Detector_E78_0_24","e1Detector_E78_1_25","e1Detector_E98_1_26","e1Detector_E98_0_27",
 			 "e1Detector_E89_0_28","e1Detector_E89_1_29","e1Detector_E09_1_30","e1Detector_E09_0_31",
-             "out_e1Detector_E21_0_0","out_e1Detector_E21_1_1","out_e1Detector_E32_1_2","out_e1Detector_E32_0_3",
-             "out_e1Detector_E23_0_4","out_e1Detector_E23_1_5","out_e1Detector_E43_1_6","out_e1Detector_E43_0_7",
-			 "out_e1Detector_E34_0_8","out_e1Detector_E34_1_9","out_e1Detector_E54_1_10","out_e1Detector_E54_0_11",
-			 "out_e1Detector_E45_0_12","out_e1Detector_E45_1_13","out_e1Detector_E65_1_14","out_e1Detector_E65_0_15",
-			 "out_e1Detector_E56_0_16","out_e1Detector_E56_1_17","out_e1Detector_E76_1_18","out_e1Detector_E76_0_19",
-			 "out_e1Detector_E67_0_20","out_e1Detector_E67_1_21","out_e1Detector_E87_1_22","out_e1Detector_E87_0_23",
-			 "out_e1Detector_E78_0_24","out_e1Detector_E78_1_25","out_e1Detector_E98_1_26","out_e1Detector_E98_0_27",
-			 "out_e1Detector_E89_0_28","out_e1Detector_E89_1_29","out_e1Detector_E90_1_30","out_e1Detector_E90_0_31"]
+             "out_e1Detector_E21_0_0","out_e1Detector_E21_1_1","out_e1Detector_E23_1_2","out_e1Detector_E23_0_3",
+             "out_e1Detector_E32_0_4","out_e1Detector_E32_1_5","out_e1Detector_E34_1_6","out_e1Detector_E34_0_7",
+			 "out_e1Detector_E43_0_8","out_e1Detector_E43_1_9","out_e1Detector_E45_1_10","out_e1Detector_E45_0_11",
+			 "out_e1Detector_E54_0_12","out_e1Detector_E54_1_13","out_e1Detector_E56_1_14","out_e1Detector_E56_0_15",
+			 "out_e1Detector_E65_0_16","out_e1Detector_E65_1_17","out_e1Detector_E67_1_18","out_e1Detector_E67_0_19",
+			 "out_e1Detector_E76_0_20","out_e1Detector_E76_1_21","out_e1Detector_E78_1_22","out_e1Detector_E78_0_23",
+			 "out_e1Detector_E87_0_24","out_e1Detector_E87_1_25","out_e1Detector_E89_1_26","out_e1Detector_E89_0_27",
+			 "out_e1Detector_E98_0_28","out_e1Detector_E98_1_29","out_e1Detector_E90_1_30","out_e1Detector_E90_0_31"]
 
 
 #detectorDownNameList = ["e1Detector_E12_0_0","e1Detector_E12_1_1","e1Detector_E23_0_4","e1Detector_E23_1_5",
@@ -74,7 +74,7 @@ IntersectionPos = [[3185.72,13874.64],
 transmissionRange = 100
 
 # ID for Edges Enter Intersection
-edgeList = ['E12','E32','E23','E43','E34','E54','E45','E65','E56','E76','E67','E87','E78','E98','E89','E09']
+edgeListIn = ['E12','E32','E23','E43','E34','E54','E45','E65','E56','E76','E67','E87','E78','E98','E89','E09']
 edgeListOut = ['E21','E23','E32','E34','E43','E45','E54','E56','E65','E67','E76','E78','E87','E89','E98','E90']
 
 InDetectorPosition = [482.64,346.31,353.16,382.31,
@@ -122,8 +122,8 @@ def run():
         firstLine = firstLine + ';' + detector     
     for trafficLightID in TrafficLightIntersectionList:
         firstLine = firstLine + ';' + trafficLightID 
-    for edge in edgeList:
-        firstLine = firstLine + ';' + edge
+    for edge in edgeListIn:
+        firstLine = firstLine + ';' + 'in_' + edge
     for edge in edgeListOut:
         firstLine = firstLine + ';' + 'out_' + edge
     for IntersectionName in IntersectionNames:
