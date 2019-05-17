@@ -138,17 +138,18 @@ def run():
         vehicleIDList = traci.vehicle.getIDList()            
         EdgeIntersectionsVehNums = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         EdgeOutIntersectionsVehNums = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]            
-        IntersectionsVehNums = [0,0,0,0,0,0,0,0]
+        IntersectionsVehLists = ['','','','','','','','']
 
+        # all vehicle within 100m of intersections
         for vehicleID in vehicleIDList:
             (x,y) = traci.vehicle.getPosition(vehicleID)
             for i in range(8):
                 if math.pow(x - IntersectionPos[i][0], 2) + math.pow(y - IntersectionPos[i][1], 2) <= math.pow(transmissionRange,2):
-                    IntersectionsVehNums[i] = IntersectionsVehNums[i] + 1
+                    IntersectionsVehLists[i] = IntersectionsVehLists[i] + vehicleID + ','
                     break
 					
         # vehicle located in the 100 of intersection drive out direction 
-        for (index, edgeID) in enumerate(edgeList):
+        for (index, edgeID) in enumerate(edgeListIn):
             vehicleIDList=traci.edge.getLastStepVehicleIDs(edgeID)
             for vehicleID in vehicleIDList:
                 distanceToEdgeSrart = traci.vehicle.getLanePosition(vehicleID)
@@ -174,8 +175,8 @@ def run():
             currentLineID = currentLineID + ';' + str(EdgeIntersectionsVehNum)
         for EdgeOutIntersectionsVehNum in EdgeOutIntersectionsVehNums:
             currentLineID = currentLineID + ';' + str(EdgeOutIntersectionsVehNum)
-        for IntersectionsVehNum in IntersectionsVehNums:
-            currentLineID = currentLineID + ';' + str(IntersectionsVehNum)	
+        for IntersectionsVehList in IntersectionsVehLists:
+            currentLineID = currentLineID + ';' + IntersectionsVehList[:-1] # Exclude the last comma
         #traceIDFile.write(currentLineID + '\n')
 		
         fileOutput = fileOutput + currentLineID + '\n'		
